@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 
 class OrderBase(BaseModel):
-    id: int
+
     order_id: int
     user_id: int
     status: str
@@ -36,9 +36,9 @@ class Order(BaseModel):
 # User Schemas
 
 class UserBase(BaseModel):
-    id :int
-    firstnamme :str
-    lastnamme :str
+    id : int
+    first_name :str
+    last_name :str
     email : EmailStr
     age :int
     gender : str
@@ -50,24 +50,34 @@ class UserBase(BaseModel):
     lattitude : str
     longitude :str
     traffic_source :str
-    created_at = datetime
+    created_at : datetime
 
 class UserOut(BaseModel):
     id :int
-    firstnamme :str
-    lastnamme :str
+    first_name :str
+    last_name :str
     email : EmailStr
     age :int
     gender : str
     state :str
     street_address : str
-    postal_code :int 
-    city :str
+    postal_code :str 
+    city :Optional[str] = None
     country :str
-    lattitude : str
-    longitude :str
+    latitude : float
+    longitude :float
     traffic_source :str
-    created_at = datetime
+    created_at : datetime
+
+    model_config = {
+        "from_attributes": True
+    }
+
+class UserWithOrderCount(BaseModel):
+    id: int
+    first_name: str
+    # ... add other user fields here
+    order_count: int
 
     model_config = {
         "from_attributes": True
